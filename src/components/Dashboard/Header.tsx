@@ -43,7 +43,7 @@ export function DashboardHeader({ activeSection }: HeaderProps) {
           </div>
           <div className="hidden md:block">
             <p className="text-sm font-medium text-gray-900">Admin User</p>
-            <p className="text-xs text-gray-500">admin@pointprism.com</p>
+            <p className="text-xs text-gray-500">luckychan094@gmail.com</p>
           </div>
         </div>
       </div>

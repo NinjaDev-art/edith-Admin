@@ -56,7 +56,7 @@ const Index = () => {
             </main>
             
             <footer className="border-t p-4 text-center text-xs text-gray-500">
-              &copy; 2024 Point Prism. All rights reserved. Admin Dashboard v1.0.
+              &copy; 2025 Edith. All rights reserved. Admin Dashboard v1.0.
             </footer>
           </div>
         </div>

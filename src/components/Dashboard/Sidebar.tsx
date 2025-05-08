@@ -47,9 +47,9 @@ export function DashboardSidebar({ className, onNavChange, activeSection }: Side
       <SidebarHeader className="px-6 py-5 border-b">
         <div className="flex items-center gap-2">
           <div className="h-8 w-8 rounded-md bg-dashboard-primary flex items-center justify-center">
-            <span className="font-bold text-white text-sm">PP</span>
+            <span className="font-bold text-white text-sm">E</span>
           </div>
-          <span className="font-semibold text-lg">Point Prism</span>
+          <span className="font-semibold text-lg">Edith</span>
         </div>
         <span className="text-xs text-muted-foreground">Admin Dashboard</span>
       </SidebarHeader>
