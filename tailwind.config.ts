@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,22 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom dashboard colors
+				'dashboard': {
+					'primary': '#6233EA',
+					'secondary': '#333EA',
+					'accent': '#3FB6C4',
+					'warning': '#FDB022',
+					'success': '#12B76A',
+					'danger': '#F04438',
+					'bg': '#F8FAFC',
+					'card': '#FFFFFF',
+					'chart1': '#6233EA',
+					'chart2': '#9B87F5',
+					'chart3': '#3FB6C4',
+					'chart4': '#FDB022',
+					'chart5': '#F04438',
 				}
 			},
 			borderRadius: {
@@ -84,12 +101,25 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'pulse-slow': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' }
+				},
+				'fade-in': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
+				'fade-in': 'fade-in 0.3s ease-out'
+			},
+			fontFamily: {
+				sans: ['Inter var', 'sans-serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
