@@ -9,7 +9,272 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      daily_stats: {
+        Row: {
+          avg_cost_per_point: number
+          created_at: string
+          date: string
+          free_usage: number
+          id: number
+          power_pro_usage: number
+          pro_usage: number
+          total_points: number
+          user_count: number
+        }
+        Insert: {
+          avg_cost_per_point?: number
+          created_at?: string
+          date: string
+          free_usage?: number
+          id?: number
+          power_pro_usage?: number
+          pro_usage?: number
+          total_points?: number
+          user_count?: number
+        }
+        Update: {
+          avg_cost_per_point?: number
+          created_at?: string
+          date?: string
+          free_usage?: number
+          id?: number
+          power_pro_usage?: number
+          pro_usage?: number
+          total_points?: number
+          user_count?: number
+        }
+        Relationships: []
+      }
+      models: {
+        Row: {
+          created_at: string
+          daily_change: number
+          enabled: boolean
+          estimated_usd: number
+          id: number
+          input_cost: number
+          multiplier: number
+          name: string
+          output_cost: number
+          point_burn: number
+          updated_at: string
+          usage: number
+        }
+        Insert: {
+          created_at?: string
+          daily_change?: number
+          enabled?: boolean
+          estimated_usd: number
+          id?: number
+          input_cost: number
+          multiplier: number
+          name: string
+          output_cost: number
+          point_burn: number
+          updated_at?: string
+          usage?: number
+        }
+        Update: {
+          created_at?: string
+          daily_change?: number
+          enabled?: boolean
+          estimated_usd?: number
+          id?: number
+          input_cost?: number
+          multiplier?: number
+          name?: string
+          output_cost?: number
+          point_burn?: number
+          updated_at?: string
+          usage?: number
+        }
+        Relationships: []
+      }
+      monthly_revenue: {
+        Row: {
+          cost: number
+          created_at: string
+          id: number
+          margin: number
+          month: string
+          profit: number
+          revenue: number
+        }
+        Insert: {
+          cost?: number
+          created_at?: string
+          id?: number
+          margin?: number
+          month: string
+          profit?: number
+          revenue?: number
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          id?: number
+          margin?: number
+          month?: string
+          profit?: number
+          revenue?: number
+        }
+        Relationships: []
+      }
+      plans: {
+        Row: {
+          avg_cost: number
+          created_at: string
+          id: number
+          name: string
+          points_per_month: number
+          price: number
+          profit: number
+          retention: number
+          revenue: number
+          target_segment: string
+          updated_at: string
+          usage_logic: string
+          user_count: number
+        }
+        Insert: {
+          avg_cost?: number
+          created_at?: string
+          id?: number
+          name: string
+          points_per_month: number
+          price: number
+          profit?: number
+          retention?: number
+          revenue?: number
+          target_segment: string
+          updated_at?: string
+          usage_logic: string
+          user_count?: number
+        }
+        Update: {
+          avg_cost?: number
+          created_at?: string
+          id?: number
+          name?: string
+          points_per_month?: number
+          price?: number
+          profit?: number
+          retention?: number
+          revenue?: number
+          target_segment?: string
+          updated_at?: string
+          usage_logic?: string
+          user_count?: number
+        }
+        Relationships: []
+      }
+      usage_logs: {
+        Row: {
+          cost: number
+          date: string
+          id: number
+          model_id: number | null
+          points_consumed: number
+          user_id: string | null
+        }
+        Insert: {
+          cost: number
+          date?: string
+          id?: number
+          model_id?: number | null
+          points_consumed: number
+          user_id?: string | null
+        }
+        Update: {
+          cost?: number
+          date?: string
+          id?: number
+          model_id?: number | null
+          points_consumed?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usage_logs_model_id_fkey"
+            columns: ["model_id"]
+            isOneToOne: false
+            referencedRelation: "models"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "usage_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["admin_role"]
+        }
+        Insert: {
+          id: string
+          role?: Database["public"]["Enums"]["admin_role"]
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["admin_role"]
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          created_at: string
+          email: string
+          favorite_model: string | null
+          id: string
+          join_date: string
+          name: string | null
+          percentage_used: number
+          plan_id: number | null
+          points_used: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          favorite_model?: string | null
+          id: string
+          join_date?: string
+          name?: string | null
+          percentage_used?: number
+          plan_id?: number | null
+          points_used?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          favorite_model?: string | null
+          id?: string
+          join_date?: string
+          name?: string | null
+          percentage_used?: number
+          plan_id?: number | null
+          points_used?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +283,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      admin_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +398,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      admin_role: ["admin", "user"],
+    },
   },
 } as const

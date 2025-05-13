@@ -1,52 +1,77 @@
 
 import React from "react";
-import { Search, Bell } from "lucide-react";
+import { Bell, Settings, LogOut } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-interface HeaderProps {
+interface DashboardHeaderProps {
   activeSection: string;
 }
 
-export function DashboardHeader({ activeSection }: HeaderProps) {
-  const titles: Record<string, string> = {
-    "overview": "Dashboard Overview",
-    "model-pricing": "Model Pricing & Multipliers",
-    "user-analytics": "User Analytics",
-    "plans": "Plans Management",
-    "revenue": "Revenue & Metrics",
-    "notifications": "Notifications",
-    "logs": "Audit Logs",
-    "settings": "Settings",
+export const DashboardHeader = ({ activeSection }: DashboardHeaderProps) => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  
+  const initials = user?.email 
+    ? user.email.substring(0, 2).toUpperCase()
+    : "AD";
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/login');
   };
 
   return (
-    <div className="flex items-center justify-between px-6 py-4 border-b bg-white sticky top-0 z-10">
-      <h1 className="text-xl font-semibold text-gray-900">{titles[activeSection] || "Dashboard"}</h1>
+    <header className="border-b px-6 py-3 flex justify-between items-center bg-white">
+      <h1 className="text-2xl font-semibold capitalize">
+        {activeSection.replace(/-/g, " ")}
+      </h1>
       
-      <div className="flex items-center gap-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-          <input 
-            type="text" 
-            placeholder="Search..." 
-            className="pl-9 pr-4 py-2 text-sm bg-gray-50 border border-gray-200 rounded-md focus:outline-none focus:border-dashboard-primary focus:ring-1 focus:ring-dashboard-primary w-64"
-          />
-        </div>
+      <div className="flex items-center space-x-4">
+        <Button variant="ghost" size="icon" className="relative">
+          <Bell className="h-5 w-5" />
+          <span className="absolute top-0 right-0 h-2 w-2 bg-red-500 rounded-full"></span>
+        </Button>
         
-        <div className="relative">
-          <Bell className="h-5 w-5 text-gray-600 cursor-pointer hover:text-dashboard-primary transition-colors" />
-          <div className="absolute -top-1 -right-1 h-4 w-4 bg-dashboard-primary text-white rounded-full flex items-center justify-center text-[10px] font-medium">3</div>
-        </div>
+        <Button variant="ghost" size="icon">
+          <Settings className="h-5 w-5" />
+        </Button>
         
-        <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-dashboard-primary flex items-center justify-center">
-            <span className="text-white text-sm font-medium">AD</span>
-          </div>
-          <div className="hidden md:block">
-            <p className="text-sm font-medium text-gray-900">Admin User</p>
-            <p className="text-xs text-gray-500">luckychan094@gmail.com</p>
-          </div>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative rounded-full h-8 w-8 p-0">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback>{initials}</AvatarFallback>
+              </Avatar>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel className="font-normal text-xs">
+              {user?.email}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile Settings</DropdownMenuItem>
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>API Keys</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSignOut} className="text-red-600">
+              <LogOut className="mr-2 h-4 w-4" />
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </div>
+    </header>
   );
-}
+};
